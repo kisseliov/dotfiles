@@ -48,12 +48,14 @@ values."
      typography
      (typography :variables
                  typography-enable-typographic-editing t)
-     org
+     theming
+     (org :variables
+          org-directory "~/Dropbox/Organisation"
+          org-log-repeat 'time
+          org-startup-indented t
+          org-hide-emphasis-markers t
+          org-hide-leading-stars t)
      (shell :variables
-            org-log-repeat 'time
-            org-startup-indented t
-            org-hide-emphasis-markers t
-            org-hide-leading-stars t
             shell-default-height 30
             shell-default-position 'bottom)
      react
@@ -67,10 +69,7 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '(
-                                      all-the-icons
-                                      rjsx-mode
-                                      )
+   dotspacemacs-additional-packages '()
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
@@ -133,7 +132,7 @@ values."
    ;; `recents' `bookmarks' `projects' `agenda' `todos'."
    ;; List sizes may be nil, in which case
    ;; `spacemacs-buffer-startup-lists-length' takes effect.
-   dotspacemacs-startup-lists '((todos . 10)
+   dotspacemacs-startup-lists '((todos . 5)
                                 (recents . 5)
                                 (projects . 7))
    ;; True if the home buffer should respond to resize events.
@@ -392,6 +391,23 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
+  ;; Suggestions
+  (global-company-mode t)
+
+  ;; Trigger completion immediately.
+  (setq company-idle-delay 0)
+
+  ;; Number the candidates (use M-1, M-2 etc to select completions).
+  (setq company-show-numbers t)
+
+  ;; Use the tab-and-go frontend.
+  ;; Allows TAB to select and complete at the same time.
+  (company-tng-configure-default)
+  (setq company-frontends
+        '(company-tng-frontend
+          company-pseudo-tooltip-frontend
+          company-echo-metadata-frontend))
+
   ;; Prettier configurations
   (add-hook 'js2-mode-hook 'prettier-js-mode)
   (add-hook 'web-mode-hook 'prettier-js-mode)
@@ -421,17 +437,18 @@ you should place your code here."
   ;; Neotree theme
   (setq neo-theme (if (display-graphic-p) 'nerd2))
   ;; ↓ colors
-  ;; (custom-set-faces
-  ;;  '(neo-root-dir-face ((t (:foreground "#8d8d84"))))
-  ;;  '(neo-dir-link-face ((t (:foreground "#0b0b0b"))))
-  ;;  '(neo-file-link-face ((t (:foreground "#0b0b0b")))))
+  (custom-set-faces
+   '(neo-root-dir-face ((t (:foreground "#BA8BAF"))))
+   '(neo-dir-link-face ((t (:foreground "#A1B56B"))))
+   '(neo-file-link-face ((t (:foreground "#545454"))))
+   )
 
   ;; ↓ Fira Code ligatures
   (if (eq system-type 'darwin)
       (mac-auto-operator-composition-mode))
 
   ;; Org-mode visual-line-mode
-  (with-eval-after-load 'org       
+  (with-eval-after-load 'org
     (add-hook 'org-mode-hook #'visual-line-mode))
 
   ;; prettify-symbols
@@ -458,6 +475,7 @@ you should place your code here."
         org-pomodoro-play-sounds 0
         org-pomodoro-short-break-lenght 7)
 
+
   ;; powerline sepator
   (setq powerline-default-separator 'nil)
 
@@ -472,15 +490,27 @@ you should place your code here."
  ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector
    ["#0a0814" "#f2241f" "#67b11d" "#b1951d" "#4f97d7" "#a31db1" "#28def0" "#b2b2b2"])
+ '(ansi-term-color-vector
+   [unspecified "#f8f8f8" "#ab4642" "#a1b56c" "#f7ca88" "#7cafc2" "#ba8baf" "#7cafc2" "#383838"] t)
+ '(custom-safe-themes
+   (quote
+    ("146061a7ceea4ccc75d975a3bb41432382f656c50b9989c7dc1a7bb6952f6eb4" "b8929cff63ffc759e436b0f0575d15a8ad7658932f4b2c99415f3dde09b32e97" "2a998a3b66a0a6068bcb8b53cd3b519d230dd1527b07232e54c8b9d84061d48d" default)))
  '(evil-want-Y-yank-to-eol nil)
+ '(neo-banner-message "")
+ '(org-agenda-files (quote ("~/Dropbox/Organisation/")))
+ '(org-default-notes-file (quote ("~/Dropbox/Organisation/todos")))
  '(org-journal-dir "~/Journal")
- '(org-journal-enable-encryption t)
  '(package-selected-packages
    (quote
-    (flow-minor-mode prettier-js typescript-mode flycheck-flow tide company-quickhelp rjsx-mode all-the-icons memoize org-journal base16-theme-theme base16-theme xterm-color web-mode web-beautify unfill typo tagedit smeargle slim-mode shell-pop scss-mode sass-mode pug-mode orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download mwim multi-term mmm-mode markdown-toc markdown-mode magit-gitflow magit-popup livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc htmlize helm-gitignore helm-css-scss helm-company helm-c-yasnippet haml-mode gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md fuzzy flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck evil-magit magit transient git-commit with-editor eshell-z eshell-prompt-extras esh-help emmet-mode diff-hl company-web web-completion-data company-tern dash-functional tern company-statistics company coffee-mode auto-yasnippet yasnippet auto-dictionary ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump diminish define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line))))
+    (toml-mode racer flycheck-rust cargo rust-mode smartparens evil helm helm-core lv company-tabnine flow-minor-mode prettier-js typescript-mode flycheck-flow tide company-quickhelp rjsx-mode all-the-icons memoize org-journal base16-theme-theme base16-theme xterm-color web-mode web-beautify unfill typo tagedit smeargle slim-mode shell-pop scss-mode sass-mode pug-mode orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download mwim multi-term mmm-mode markdown-toc markdown-mode magit-gitflow magit-popup livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc htmlize helm-gitignore helm-css-scss helm-company helm-c-yasnippet haml-mode gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md fuzzy flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck evil-magit magit transient git-commit with-editor eshell-z eshell-prompt-extras esh-help emmet-mode diff-hl company-web web-completion-data company-tern dash-functional tern company-statistics company coffee-mode auto-yasnippet yasnippet auto-dictionary ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump diminish define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(header-line ((t (:inherit mode-line :background ":background" :foreground "#ba8baf" :height 0.5)))))
+ '(header-line ((t (:inherit mode-line :background ":background" :foreground "#ba8baf" :height 0.5))))
+ '(neo-banner-face ((t (:weight bold))))
+ '(neo-button-face ((t (:background "#DC9656"))))
+ '(neo-dir-link-face ((t (:foreground "#0b0b0b"))))
+ '(neo-file-link-face ((t (:foreground "#0b0b0b"))))
+ '(neo-root-dir-face ((t (:foreground "#8d8d84")))))
