@@ -18,17 +18,14 @@
 
 (package-initialize)
 
-
 ;; We will use 'use-package' to install and configure packages.
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
 (eval-when-compile (require 'use-package))
 
-
 ;; No need to out 'ensure' everywhere, since we don't use anything else to install packages.
 (setq use-package-always-ensure t)
-
 
 ;; Pass system shell environment to Emacs. This is important primarily for shell inside Emacs, but also things like Org mode export to Tex PDF don't work, since it relies on running external command pdflatex, which is loaded from PATH.
 (use-package exec-path-from-shell

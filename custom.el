@@ -19,8 +19,18 @@
  '(x-use-underline-position-properties t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
+
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(fringe ((t (:background "#fafafa" :width extra-expanded))))
+ '(header-line ((t (:inherit mode-line :background ":background" :foreground "#ba8baf" :height 0.5))))
+ '(hl-paren-face ((t nil)) t)
+ '(line-number ((t (:background "gray100" :foreground "dark gray"))))
+ '(line-number-current-line ((t (:background "#f0f0f1" :foreground "#0b0b0b"))))
+ '(neo-banner-face ((t (:weight bold))))
+ '(neo-button-face ((t (:background "#DC9656"))))
+ '(neo-dir-link-face ((t (:foreground "#0b0b0b"))))
+ '(neo-file-link-face ((t (:foreground "#0b0b0b"))))
+ '(neo-root-dir-face ((t (:foreground "#8d8d84"))))
  '(sp-show-pair-match-face ((t (:underline t)))))
