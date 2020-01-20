@@ -4,7 +4,6 @@
 ;; ====
 ;; INIT
 
-
 ;; Package system and sources.
 (require 'package)
 (let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
@@ -37,11 +36,9 @@
 (when (memq window-system '(mac ns))
   (exec-path-from-shell-initialize))
 
-
 ;; Store custom-file separately, don't freak out when it's not found
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file 'noerror)
-
 
 ;; Set path for private config. private.el is not part of Castlemacs and you can use it for your personal
 ;; additions. Do not change init.el yourself, it will make updates harder.
@@ -52,19 +49,15 @@
      (when (file-exists-p private-file)
        (load-file private-file)))))
 
-
 ;; =============
 ;; MODIFIER KEYS
-
 
 ;; Both command keys are 'Super'
 (setq mac-right-command-modifier 'super)
 (setq mac-command-modifier 'super)
 
-
 ;; Option or Alt is naturally 'Meta'
 (setq mac-option-modifier 'meta)
-
 
 ;; Right Alt (option) can be used to enter symbols like em dashes '—' and euros '€' and stuff.
 (setq mac-right-option-modifier 'nil)
@@ -72,10 +65,8 @@
 ;; Control is control, and you also need to change Caps Lock to Control in the Keyboard
 ;; preferences in macOS.
 
-
 ;; =============
 ;; SANE DEFAULTS
-
 
 ;; Smoother and nicer scrolling
 (setq scroll-margin 10
@@ -87,23 +78,18 @@
 (setq mouse-wheel-follow-mouse 't)
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 1)))
 
-
 ;; Use ESC as universal get me out of here command
 (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
-
 
 ;; Don't bother with auto save and backups.
 (setq auto-save-default nil)
 (setq make-backup-files nil)
 
-
 ;; Warn only when opening files bigger than 100MB
 (setq large-file-warning-threshold 100000000)
 
-
 ;; Move file to trash instead of removing.
 (setq-default delete-by-moving-to-trash t)
-
 
 ;; Revert (update) buffers automatically when underlying files are changed externally.
 (global-auto-revert-mode t)
@@ -171,32 +157,26 @@
 
 
 ;; Font
-(when (member "menlo" (font-family-list))
-  (set-face-attribute 'default nil :font "Menlo 15"))
+(set-face-attribute 'default nil :font "FuraCode Nerd Font")
+(set-face-attribute 'default nil :height 150)
 (setq-default line-spacing 2)
-
 
 ;; Nice and simple default light theme.
 (load-theme 'tsdh-light)
-
 
 ;; Pretty icons
 (use-package all-the-icons)
 ;; MUST DO M-x all-the-icons-install-fonts after
 
-
 ;; Hide toolbar and scroll bar
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 
-
 ;; Always wrap lines
 (global-visual-line-mode 1)
 
-
 ;; Highlight current line
 (global-hl-line-mode 1)
-
 
 ;; Show parens and other pairs.
 (use-package smartparens
@@ -239,14 +219,12 @@
 
 
 ;; Show vi-like tilde in the fringe on empty lines.
-(use-package vi-tilde-fringe
-  :config
-  (global-vi-tilde-fringe-mode 1))
-
+;; (use-package vi-tilde-fringe
+;;   :config
+;;   (global-vi-tilde-fringe-mode 1))
 
 ;; Show full path in the title bar.
-(setq-default frame-title-format "%b (%f)")
-
+;; (setq-default frame-title-format "%b (%f)")
 
 ;; Never use tabs, use spaces instead.
 (setq tab-width 2)
@@ -258,17 +236,14 @@
 (setq-default tab-width 2)
 (setq-default c-basic-indent 2)
 
-
 ;; Show keybindings cheatsheet
 (use-package which-key
   :config
   (which-key-mode)
   (setq which-key-idle-delay 0.5))
 
-
 ;; Disable blinking cursor.
-(blink-cursor-mode 0)
-
+;; (blink-cursor-mode 0)
 
 ;; ================
 ;; BASIC NAVIGATION
@@ -693,6 +668,62 @@ point reaches the beginning or end of the buffer, stop there."
 ;; Open private config file by pressing C-x and then c
 ;; Contain custom settings to private.el to ensure easy Castlemacs updates.
 (global-set-key (kbd "C-x c") (lambda () (interactive) (find-file "~/.emacs.d/private.el")))
+
+;; ↓ Restores window position and size
+(defun save-framegeometry ()
+  "Gets the current frame's geometry and saves to ~/.emacs.d/framegeometry."
+  (let (
+        (framegeometry-left (frame-parameter (selected-frame) 'left))
+        (framegeometry-top (frame-parameter (selected-frame) 'top))
+        (framegeometry-width (frame-parameter (selected-frame) 'width))
+        (framegeometry-height (frame-parameter (selected-frame) 'height))
+        (framegeometry-file (expand-file-name "~/.emacs.d/framegeometry"))
+        )
+
+    (when (not (number-or-marker-p framegeometry-left))
+      (setq framegeometry-left 0))
+    (when (not (number-or-marker-p framegeometry-top))
+      (setq framegeometry-top 0))
+    (when (not (number-or-marker-p framegeometry-width))
+      (setq framegeometry-width 0))
+    (when (not (number-or-marker-p framegeometry-height))
+      (setq framegeometry-height 0))
+
+    (with-temp-buffer
+      (insert
+       ";;; This is the previous emacs frame's geometry.\n"
+       ";;; Last generated " (current-time-string) ".\n"
+       "(setq initial-frame-alist\n"
+       "      '(\n"
+       (format "        (top . %d)\n" (max framegeometry-top 0))
+       (format "        (left . %d)\n" (max framegeometry-left 0))
+       (format "        (width . %d)\n" (max framegeometry-width 0))
+       (format "        (height . %d)))\n" (max framegeometry-height 0)))
+      (when (file-writable-p framegeometry-file)
+        (write-file framegeometry-file))))
+  )
+
+(defun load-framegeometry ()
+  "Loads ~/.emacs.d/framegeometry which should load the previous frame's
+  geometry."
+  (let ((framegeometry-file (expand-file-name "~/.emacs.d/framegeometry")))
+    (when (file-readable-p framegeometry-file)
+      (load-file framegeometry-file))))
+
+;; If we're using GUI, then restore window's position and size
+  (if window-system
+      (progn
+        (add-hook 'after-init-hook 'load-framegeometry)
+        (add-hook 'kill-emacs-hook 'save-framegeometry))
+    )
+
+ ;; Custom margins
+  (setq-default left-margin-width 3 right-margin-width 0) ; Define new widths.
+  (set-window-buffer nil (current-buffer)) ; Use them now.
+
+;; ↓ Fira Code ligatures
+  (if (eq system-type 'darwin)
+      (mac-auto-operator-composition-mode))
 
 ;; =======
 ;; THE END
