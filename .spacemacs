@@ -148,7 +148,7 @@ values."
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
-   dotspacemacs-default-font '("Fira Code"
+   dotspacemacs-default-font '("Hack Nerd Font"
                                :size 14
                                :weight normal
                                :width normal
@@ -419,6 +419,7 @@ you should place your code here."
                            "--no-semi"
                            "--double-quote"
                            ))
+  
 
   ;; Keybinding to kill-buffer-and-window
   (spacemacs/declare-prefix "SPC" "kill-buffer-and-window")
@@ -432,7 +433,7 @@ you should place your code here."
   (add-to-list 'default-frame-alist '(left-fringe . 0))
   (add-to-list 'default-frame-alist '(right-fringe . 0))
   (add-to-list 'default-frame-alist '(vertical-scroll-bars . nil))
-  (add-to-list 'default-frame-alist '(internal-border-width . 0))
+  (add-to-list 'default-frame-alast '(internal-border-width . 0))
   (add-to-list 'default-frame-alist '(width . 160))
   (add-to-list 'default-frame-alist '(height . 40))
   (setq ns-use-proxy-icon nil)
@@ -509,7 +510,7 @@ you should place your code here."
  '(org-journal-dir "~/Journal")
  '(package-selected-packages
    (quote
-    (golden-ratio-scroll-screen flow-js2-mode toml-mode racer flycheck-rust cargo rust-mode smartparens evil helm helm-core lv company-tabnine flow-minor-mode prettier-js typescript-mode flycheck-flow tide company-quickhelp rjsx-mode all-the-icons memoize org-journal base16-theme-theme base16-theme xterm-color web-mode web-beautify unfill typo tagedit smeargle slim-mode shell-pop scss-mode sass-mode pug-mode orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download mwim multi-term mmm-mode markdown-toc markdown-mode magit-gitflow magit-popup livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc htmlize helm-gitignore helm-css-scss helm-company helm-c-yasnippet haml-mode gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md fuzzy flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck evil-magit magit transient git-commit with-editor eshell-z eshell-prompt-extras esh-help emmet-mode diff-hl company-web web-completion-data company-tern dash-functional tern company-statistics company coffee-mode auto-yasnippet yasnippet auto-dictionary ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump diminish define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line)))
+    (clojure-mode hydra projectile pkg-info epl flx goto-chg undo-tree s dash bind-map bind-key packed avy async popup nodejs-repl powerline spinner parent-mode highlight iedit anzu f golden-ratio-scroll-screen flow-js2-mode toml-mode racer flycheck-rust cargo rust-mode smartparens evil helm helm-core lv company-tabnine flow-minor-mode prettier-js typescript-mode flycheck-flow tide company-quickhelp rjsx-mode all-the-icons memoize org-journal base16-theme-theme base16-theme xterm-color web-mode web-beautify unfill typo tagedit smeargle slim-mode shell-pop scss-mode sass-mode pug-mode orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download mwim multi-term mmm-mode markdown-toc markdown-mode magit-gitflow magit-popup livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc htmlize helm-gitignore helm-css-scss helm-company helm-c-yasnippet haml-mode gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md fuzzy flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip flycheck evil-magit magit transient git-commit with-editor eshell-z eshell-prompt-extras esh-help emmet-mode diff-hl company-web web-completion-data company-tern dash-functional tern company-statistics company coffee-mode auto-yasnippet yasnippet auto-dictionary ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump diminish define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line)))
  '(show-smartparens-global-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -526,3 +527,4 @@ you should place your code here."
  '(neo-dir-link-face ((t (:foreground "#0b0b0b"))))
  '(neo-file-link-face ((t (:foreground "#0b0b0b"))))
  '(neo-root-dir-face ((t (:foreground "#8d8d84")))))
+
