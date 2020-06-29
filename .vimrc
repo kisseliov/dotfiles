@@ -1,12 +1,12 @@
 set encoding=utf-8
 
-
 call plug#begin('~/.vim/plugged')
 
-  Plug 'ChristianChiarulli/codi.vim'
+  Plug 'bluz71/vim-moonfly-colors'
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
   Plug 'junegunn/fzf.vim'
+  Plug 'ChristianChiarulli/codi.vim'
   Plug 'tpope/vim-fugitive'
   Plug 'tpope/vim-surround'
   Plug 'airblade/vim-gitgutter'
@@ -14,12 +14,36 @@ call plug#begin('~/.vim/plugged')
   Plug 'andreypopp/vim-colors-plain'
   Plug 'sheerun/vim-polyglot'
   Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
+  Plug 'itchyny/lightline.vim'
+  Plug 'tpope/vim-commentary'
+  Plug 'mhinz/vim-startify'
+  Plug 'ap/vim-css-color'
+  Plug 'vimwiki/vimwiki'
 
 call plug#end()
 
+let g:vimwiki_list = [{'path': '~/Sync/vimwiki', 'syntax': 'markdown', 'ext': '.md'}]
+
+let g:lightline = {
+	\ 'colorscheme': 'wombat',
+	\ 'component_function': {
+	\   'cocstatus': 'coc#status'
+  \  },
+	\ }
+
+autocmd User CocStatusChange, CocDiagnosticChange call lightline#update()
+
+let g:startify_lists = [
+      \ { 'type': 'files',     'header': ['   Recent files']   },
+      \ { 'type': 'dir',       'header': ['   Recent dirs ']   },
+      \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
+      \ { 'type': 'sessions',  'header': ['   Sessions']       },
+      \ ]
+
+let g:startify_bookmarks = [ '~/.vimrc']
 
 " Codi
-hi CodiVirtualText guifg=g:white
+hi CodiVirtualText guifg='LightGreen'
 
 let g:codi#virtual_text_prefix = "\u276f\ "
  
@@ -57,13 +81,13 @@ colorscheme plain
     syntax on
  endif
  
-
+hi! PmenuSel ctermbg=0
 
 " Basic vim configurations "
 "                          "
 set nocompatible
 set hidden
-set wrap        	" wrap lines
+set wrap          	" wrap lines
 set softtabstop=2
 set tabstop=2     	" a tab is four spaces
 set backspace=indent,eol,start
@@ -81,31 +105,33 @@ set smarttab      	" insert tabs on the start of a line according to
                     "    shiftwidth, not tabstop
 set hlsearch      	" highlight search terms
 set incsearch     	" show search matches as you type
-set scrolloff=4		" keep 4 lines off the edges of the screen when scrolling
+set scrolloff=4	  	" keep 4 lines off the edges of the screen when scrolling
 
-set history=1000	" remember more commands and search history
+set history=1000  	" remember more commands and search history
 set undolevels=1000 " use many muchos levels of undo
-set wildignore=*.swp,*.bak,*.pyc,*.class
 set title           " change the terminal's title
 set visualbell      " don't beep
 set noerrorbells    " don't beep
 set vb t_vb=
-set tildeop 		" make tilde (flip case) an operator
+set tildeop 		    " make tilde (flip case) an operator
 
 set nobackup
 set noswapfile
 set wildmenu 		" tab completion in ex mode
 set ruler			" lines, cols in status line
-set showmode		" current mode in status line
+set noshowmode		" current mode in status line
 
 set showcmd         " display the number of chars in v-mode
-set laststatus=0    " no extra status lines
+set laststatus=2    " no extra status lines
 set shortmess=a
 set display=lastline,uhex
 set mouse=a
 set confirm
 set ttimeoutlen=100
 set clipboard+=unnamed
+set wildignore=*.swp,*.bak,*.pyc,*.class
+
+set splitright
 
 " Activate filetype
 filetype on
@@ -115,22 +141,70 @@ filetype plugin indent on
 " Maps
 let g:mapleader = "\<Space>"
 
-" Open fzf in current repo
-nnoremap <C-p> :GFiles<CR>
-nnoremap <leader><leader> C-^<CR>
+nnoremap <leader>p :GFiles<CR>
 
+nnoremap <C-H> <C-W><C-H>
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
 
-nmap <silent> <leader>E :e $MYVIMRC<CR>
-nmap <silent> <leader>S :so $MYVIMRC<CR>
+nnoremap <M-h> <C-W>H
+nnoremap <M-j> <C-W>J
+nnoremap <M-k> <C-W>K
+nnoremap <M-l> <C-W>L
+
+nmap <silent> <leader>ve :e $MYVIMRC<CR>
+nmap <silent> <leader>vs :so $MYVIMRC<CR>
+nmap <silent> <leader>w :w<CR>
+nmap <silent> <leader>gs :G<CR>
 " nnoremap ; :
 nmap <silent> <leader>/ :nohlsearch<CR>
 
+" Open shell in vim
+if has('nvim') || has('terminal')
+  map <silent> <Leader>' :terminal<CR>
+else
+  map <silent> <Leader>' :shell<CR>
+endif
+
+
+" Window {
+  " if get(g:, 'vim_better_default_window_key_mapping', 1)
+  "   nnoremap <Leader>ww <C-W>w
+  "   nnoremap <Leader>wr <C-W>r
+  "   nnoremap <Leader>wd <C-W>c
+  "   nnoremap <Leader>wq <C-W>q
+  "   nnoremap <Leader>wj <C-W>j
+  "   nnoremap <Leader>wk <C-W>k
+  "   nnoremap <Leader>wh <C-W>h
+  "   nnoremap <Leader>wl <C-W>l
+  "   if has('nvim') || has('terminal')
+  "     tnoremap <Leader>wj <C-W>j
+  "     tnoremap <Leader>wk <C-W>k
+  "     tnoremap <Leader>wh <C-W>h
+  "     tnoremap <Leader>wl <C-W>l
+  "   endif
+  "   nnoremap <Leader>wH <C-W>5<
+  "   nnoremap <Leader>wL <C-W>5>
+  "   nnoremap <Leader>wJ :resize +5<CR>
+  "   nnoremap <Leader>wK :resize -5<CR>
+  "   nnoremap <Leader>w= <C-W>=
+  "   nnoremap <Leader>ws <C-W>s
+  "   nnoremap <Leader>w- <C-W>s
+  "   nnoremap <Leader>wv <C-W>v
+  "   nnoremap <Leader>w\| <C-W>v
+  "   nnoremap <Leader>w2 <C-W>v
+  " endif
+" }
+
 " w!! saves file under sudo
 cmap w!! w !sudo tee % >/dev/null
+
+" Treat long lines as break lines (useful when moving around in them)
+nmap j gj
+nmap k gk
+vmap j gj
+vmap k gk
 
 " Key mapping for Russian QWERTY keyboard in UTF-8
 map й q
@@ -329,12 +403,11 @@ let g:fzf_action = {
 " explicitly bind the keys to down and up in your $FZF_DEFAULT_OPTS.
 let g:fzf_history_dir = '~/.local/share/fzf-history'
 
-map <C-f> :Files<CR>
+map <leader>f :Files<CR>
 map <leader>b :Buffers<CR>
 nnoremap <leader>g :Rg<CR>
 nnoremap <leader>t :Tags<CR>
 nnoremap <leader>m :Marks<CR>
-
 
 let g:fzf_tags_command = 'ctags -R'
 " Border color
