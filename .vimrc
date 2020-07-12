@@ -155,7 +155,7 @@ nnoremap <M-l> <C-W>L
 
 nmap <silent> <leader>ve :e $MYVIMRC<CR>
 nmap <silent> <leader>vs :so $MYVIMRC<CR>
-nmap <silent> <leader>w :w<CR>
+nmap <silent> <leader>w <C-w>
 nmap <silent> <leader>gs :G<CR>
 " nnoremap ; :
 nmap <silent> <leader>/ :nohlsearch<CR>
@@ -320,6 +320,8 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
+" Project-wide renaming
+nnoremap <leader>prw :CocSearch <C-R>=expand("<cword>")<CR><CR>
 
 " Formatting selected code.
 xmap <leader>f  <Plug>(coc-format-selected)
