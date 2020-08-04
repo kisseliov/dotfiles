@@ -106,8 +106,11 @@ export SSH_KEY_PATH="~/.ssh/rsa_id"
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
+
+alias v="nvim"
+alias zshconfig="nvim ~/.zshrc"
+alias ohmyzsh="nvim ~/.oh-my-zsh"
+alias config='/usr/bin/git --git-dir=/Users/kisseliov/.cfg/ --work-tree=/Users/kisseliov'
 
 # Load Nerd Fonts with Powerlevel9k theme for Zsh
 # POWERLEVEL9K_MODE='nerdfont-complete'
@@ -125,7 +128,6 @@ source "$HOMEBREW_FOLDER/zsh-autosuggestions/zsh-autosuggestions.zsh"
 
 #Include Z
 . ~/z.sh
-alias config='/usr/bin/git --git-dir=/Users/kisseliov/.cfg/ --work-tree=/Users/kisseliov'
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
