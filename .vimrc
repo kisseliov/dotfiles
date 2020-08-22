@@ -2,27 +2,44 @@ set encoding=utf-8
 
 call plug#begin('~/.vim/plugged')
 
-  Plug 'xolox/vim-misc'
-  Plug 'xolox/vim-notes'
-  Plug 'huyvohcmc/atlas.vim'
-  Plug 'lervag/vimtex'
-  Plug 'bluz71/vim-moonfly-colors'
-  Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  " Extending basic stuff
+  Plug 'wellle/targets.vim'
+  Plug 'tpope/vim-commentary'
+  " Plug 'tpope/vim-vinegar'
+  Plug 'tpope/vim-surround'
+  Plug 'airblade/vim-rooter'
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
   Plug 'junegunn/fzf.vim'
-  Plug 'ChristianChiarulli/codi.vim'
+  Plug 'stsewd/fzf-checkout.vim'
+   
+  " Coc
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+  " Git
   Plug 'tpope/vim-fugitive'
-  Plug 'tpope/vim-surround'
   Plug 'airblade/vim-gitgutter'
-  Plug 'airblade/vim-rooter'
+  Plug 'rbong/vim-flog'
+
+  " Notes
+  Plug 'xolox/vim-misc'
+  Plug 'xolox/vim-notes'
+
+  " Theming
+  Plug 'mhinz/vim-startify'
+  Plug 'itchyny/lightline.vim'
+  Plug 'huyvohcmc/atlas.vim'
+  Plug 'bluz71/vim-moonfly-colors'
   Plug 'andreypopp/vim-colors-plain'
   Plug 'drewtempelmeyer/palenight.vim'
+
+  " Misc
+  Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install', 'for': 'markdown' }
   Plug 'sheerun/vim-polyglot'
+  Plug 'ChristianChiarulli/codi.vim'
   Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
-  Plug 'itchyny/lightline.vim'
-  Plug 'tpope/vim-commentary'
-  Plug 'mhinz/vim-startify'
+  Plug 'mbbill/undotree'
   Plug 'ap/vim-css-color'
+  Plug 'lervag/vimtex'
 
 call plug#end()
 
@@ -45,21 +62,17 @@ let g:lightline = {
       \  },
       \ }
 
-autocmd User CocStatusChange, CocDiagnosticChange call lightline#update()
-
-
 " Startify
 let g:startify_lists = [
-      \ { 'type': 'files',     'header': ['   Recent files']   },
-      \ { 'type': 'dir',       'header': ['   Recent files in current directory']   },
-      \ { 'type': 'sessions',  'header': ['   Sessions']       },
+      \ { 'type': 'files',     'header': ['   Recent files 📁']   },
+      \ { 'type': 'dir',       'header': ['   Recent files in current directory 📂']   },
+      \ { 'type': 'sessions',  'header': ['   Sessions 📆']       },
       \ ]
 
 let g:startify_bookmarks = []
 
-
 " Codi
-hi CodiVirtualText guifg='LightGreen'
+hi! link CodiVirtualText String
 
 let g:codi#virtual_text_prefix = "\u276f\ "
 
@@ -68,7 +81,7 @@ let g:codi#aliases = {
       \ }
 
 " Colorscheme
-set background=dark " Set to dark for a dark variant
+set background=dark
 colorscheme plain
 
 if has("gui_running")
@@ -103,6 +116,7 @@ hi! CursorLineNr ctermfg=249
 
 " Basic vim configurations "
 "                          "
+set noemoji
 set nocompatible
 set hidden
 set wrap          	" wrap lines
@@ -152,6 +166,8 @@ set clipboard+=unnamed
 set wildignore=*.swp,*.bak,*.pyc,*.class
 set splitright
 
+let g:markdown_folding = 1
+
 " Activate filetype
 filetype on
 filetype plugin on
@@ -159,23 +175,28 @@ filetype plugin indent on
 
 " Maps
 let g:mapleader = "\<Space>"
+
+" Git checkout
+nnoremap <leader>gc :GCheckout<CR>
+
+" Set a timestamp 
+map <leader>D :put =strftime('%a %d %b %H:%M:%S')<CR>
+
+" Toggle line numbers
 noremap <F3> :set invnumber invrelativenumber<CR>
+
 nnoremap <leader>p :GFiles<CR>
-vnoremap <silent>J :m '>+1<CR>gv=gv
-vnoremap <silent>K :m '<-2<CR>gv=gv
+nnoremap <M-e> :Vexplore<CR>
 
-" modify selected text using combining diacritics
-command! -range -nargs=0 Overline        call s:CombineSelection(<line1>, <line2>, '0305')
-command! -range -nargs=0 Underline       call s:CombineSelection(<line1>, <line2>, '0332')
-command! -range -nargs=0 DoubleUnderline call s:CombineSelection(<line1>, <line2>, '0333')
-command! -range -nargs=0 Strikethrough   call s:CombineSelection(<line1>, <line2>, '0336')
+" Toggle undotree
+nnoremap <F5> :UndotreeToggle<cr>
 
-function! s:CombineSelection(line1, line2, cp)
-  execute 'let char = "\u'.a:cp.'"'
-  execute a:line1.','.a:line2.'s/\%V[^[:cntrl:]]/&'.char.'/ge'
-endfunction
-" nnoremap <leader>st :s/ /-/ge\|s/./&<CR>
-vnoremap <leader>ss :Strikethrough<CR>
+" *Move* a visual block
+" vnoremap <silent>J :m '>+1<CR>gv=gv
+" vnoremap <silent>K :m '<-2<CR>gv=gv
+
+nnoremap <C-n> :bnext<CR>
+nnoremap <C-p> :bprevious<CR>
 
 nnoremap <C-H> <C-W><C-H>
 nnoremap <C-J> <C-W><C-J>
@@ -284,8 +305,8 @@ function! s:check_back_space() abort
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-" Use <c-space> to trigger completion.
-inoremap <silent><expr> <c-space> coc#refresh()
+" Use <c-space> to trigger completion. 
+inoremap <silent><expr> <c-space> coc#refresh() 
 
 " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
 " position. Coc only does snippet and additional edit on confirm.
@@ -335,7 +356,7 @@ function! s:check_back_space() abort
 endfunction
 
 let g:coc_snippet_next = '<tab>'
-
+let g:coc_snippet_previous = '<s-tab>'
 
 " Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
@@ -428,30 +449,33 @@ map <leader><leader> :Buffers<CR>
 map <leader>bd :bd<CR>
 nnoremap <leader>g :Rg<CR>
 nnoremap <leader>t :Tags<CR>
-nnoremap <leader>m :Marks<CR>
+nnoremap <leader>m :Marks<CR> 
+nnoremap <leader>h :History<CR> 
+
 
 let g:fzf_tags_command = 'ctags -R'
-" Border color
 
+" Border color
 let $FZF_DEFAULT_OPTS = '--layout=reverse --info=inline'
 let $FZF_DEFAULT_COMMAND="rg --files --hidden"
 
+let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.8 } }
 
 " Customize fzf colors to match your color scheme
 let g:fzf_colors =
       \ { 'fg':      ['fg', 'Normal'],
-      \ 'bg':      ['bg', 'Normal'],
-      \ 'hl':      ['fg', 'Comment'],
-      \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-      \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-      \ 'hl+':     ['fg', 'Statement'],
-      \ 'info':    ['fg', 'PreProc'],
-      \ 'border':  ['fg', 'Ignore'],
-      \ 'prompt':  ['fg', 'Conditional'],
-      \ 'pointer': ['fg', 'Exception'],
-      \ 'marker':  ['fg', 'Keyword'],
-      \ 'spinner': ['fg', 'Label'],
-      \ 'header':  ['fg', 'Comment'] }
+      \   'bg':      ['bg', 'Normal'],
+      \   'hl':      ['fg', 'Comment'],
+      \   'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+      \   'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+      \   'hl+':     ['fg', 'Statement'],
+      \   'info':    ['fg', 'PreProc'],
+      \   'border':  ['fg', 'Ignore'],
+      \   'prompt':  ['fg', 'Conditional'],
+      \   'pointer': ['fg', 'Exception'],
+      \   'marker':  ['fg', 'Keyword'],
+      \   'spinner': ['fg', 'Label'],
+      \   'header':  ['fg', 'Comment'] }
 
 "Get Files
 command! -bang -nargs=? -complete=dir Files
@@ -480,7 +504,6 @@ command! -bang -nargs=* GGrep
       \ call fzf#vim#grep(
       \   'git grep --line-number '.shellescape(<q-args>), 0,
       \   fzf#vim#with_preview({'dir': systemlist('git rev-parse --show-toplevel')[0]}), <bang>0)
-
 
 " Prettier
 " autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html Prettier

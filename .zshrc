@@ -7,6 +7,13 @@ fi
 
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
 
+export ANDROID_HOME=$HOME/Library/Android/sdk
+export PATH=$PATH:$ANDROID_HOME/emulator
+export PATH=$PATH:$ANDROID_HOME/tools
+export PATH=$PATH:$ANDROID_HOME/tools/bin
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -75,7 +82,7 @@ ZSH_THEME=spaceship
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  git node npm extract nvm 
+  git node npm extract nvm
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -107,6 +114,7 @@ export SSH_KEY_PATH="~/.ssh/rsa_id"
 #
 # Example aliases
 
+alias tree="tree -A"
 alias v="nvim"
 alias zshconfig="nvim ~/.zshrc"
 alias ohmyzsh="nvim ~/.oh-my-zsh"
