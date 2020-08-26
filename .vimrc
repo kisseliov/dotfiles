@@ -5,13 +5,15 @@ call plug#begin('~/.vim/plugged')
   " Extending basic stuff
   Plug 'wellle/targets.vim'
   Plug 'tpope/vim-commentary'
-  " Plug 'tpope/vim-vinegar'
   Plug 'tpope/vim-surround'
   Plug 'airblade/vim-rooter'
+  Plug 'bluz71/vim-moonfly-colors'
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
   Plug 'junegunn/fzf.vim'
   Plug 'stsewd/fzf-checkout.vim'
    
+  -> ==> 
   " Coc
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
@@ -43,6 +45,13 @@ call plug#begin('~/.vim/plugged')
 
 call plug#end()
 
+" Lightline
+let g:lightline = {
+      \ 'colorscheme': 'wombat',
+      \ 'component_function': {
+      \   'cocstatus': 'coc#status'
+      \  },
+      \ }
 
 " Notes
 let g:notes_directories = ['~/Sync/Notes']
@@ -53,15 +62,6 @@ hi! link notesDoneItem LineNr
 hi! link notesXXX Normal
 hi! link notesFixMe Normal
 
-
-" Lightline
-let g:lightline = {
-      \ 'colorscheme': 'wombat',
-      \ 'component_function': {
-      \   'cocstatus': 'coc#status'
-      \  },
-      \ }
-
 " Startify
 let g:startify_lists = [
       \ { 'type': 'files',     'header': ['   Recent files 📁']   },
@@ -71,45 +71,47 @@ let g:startify_lists = [
 
 let g:startify_bookmarks = []
 
+autocmd User CocStatusChange, CocDiagnosticChange call lightline#update()
+
 " Codi
 hi! link CodiVirtualText String
 
 let g:codi#virtual_text_prefix = "\u276f\ "
-
+ 
 let g:codi#aliases = {
-      \ 'javascript.jsx': 'javascript',
-      \ }
+                   \ 'javascript.jsx': 'javascript',
+                   \ }
 
 " Colorscheme
 set background=dark
 colorscheme plain
 
-if has("gui_running")
-  "" Tweak GUI options
-  set guioptions=aegimLt
-  set go-=M
-  set go-=m
-  set go-=L
-  set number
-  let &t_ut=''
-  "" Use 256 colours
-  set t_Co=256
-  "" Size of GUI version windows
-  set columns=84 lines=60
-  "" Highlight current line
-  set cursorline
-endif
-
-if &t_Co >= 256 || has("gui_running")
-  set background=dark
-  colorscheme plain
-endif
-
-if &t_Co > 2 || has("gui_running")
-  " switch syntax highlighting on, when the terminal has colors
-  syntax on
-endif
-
+ if has("gui_running")
+     "" Tweak GUI options
+     set guioptions=aegimLt
+     set go-=M
+     set go-=m
+     set go-=L
+     set number
+     let &t_ut=''
+     "" Use 256 colours
+     set t_Co=256
+     "" Size of GUI version windows
+     set columns=84 lines=60
+     "" Highlight current line
+     set cursorline
+ endif
+ 
+ if &t_Co >= 256 || has("gui_running")
+     set background=dark
+     colorscheme plain
+ endif
+ 
+ if &t_Co > 2 || has("gui_running")
+    " switch syntax highlighting on, when the terminal has colors
+    syntax on
+ endif
+ 
 hi! PmenuSel ctermbg=0
 hi! LineNr ctermfg=236
 hi! CursorLineNr ctermfg=249
@@ -132,12 +134,12 @@ set textwidth=90
 set shiftround    	" use multiple of shiftwidth when indenting with '<' and '>'
 set showmatch     	" set show matching parenthesis
 set smartcase     	" ignore case if search pattern is all lowercase,
-                    " case-sensitive otherwise
+                    "    case-sensitive otherwise
 set smarttab      	" insert tabs on the start of a line according to
-                    " shiftwidth, not tabstop
+                    "    shiftwidth, not tabstop
 set hlsearch      	" highlight search terms
 set incsearch     	" show search matches as you type
-set scrolloff=6	  	" keep 4 lines off the edges of the screen when scrolling
+set scrolloff=4	  	" keep 4 lines off the edges of the screen when scrolling
 
 set history=1000  	" remember more commands and search history
 set undolevels=1000 " use many muchos levels of undo
@@ -149,12 +151,10 @@ set tildeop 		    " make tilde (flip case) an operator
 
 set nobackup
 set noswapfile
-set wildmenu 		    " tab completion in ex mode
-set ruler			      " lines, cols in status line
-set noshowmode		  " current mode in status line
+set wildmenu 		" tab completion in ex mode
+set ruler			" lines, cols in status line
+set noshowmode		" current mode in status line
 
-set nu              " show numbers
-set relativenumber  " show relative numbers 
 set showcmd         " display the number of chars in v-mode
 set laststatus=2    " no extra status lines
 set shortmess=a
@@ -164,6 +164,7 @@ set confirm
 set ttimeoutlen=100
 set clipboard+=unnamed
 set wildignore=*.swp,*.bak,*.pyc,*.class
+
 set splitright
 
 let g:markdown_folding = 1
@@ -186,7 +187,7 @@ map <leader>D :put =strftime('%a %d %b %H:%M:%S')<CR>
 noremap <F3> :set invnumber invrelativenumber<CR>
 
 nnoremap <leader>p :GFiles<CR>
-nnoremap <M-e> :Vexplore<CR>
+nnoremap <M-e> :Exp<CR>
 
 " Toggle undotree
 nnoremap <F5> :UndotreeToggle<cr>
@@ -197,6 +198,7 @@ nnoremap <F5> :UndotreeToggle<cr>
 
 nnoremap <C-n> :bnext<CR>
 nnoremap <C-p> :bprevious<CR>
+nnoremap <leader>p :GFiles<CR>
 
 nnoremap <C-H> <C-W><C-H>
 nnoremap <C-J> <C-W><C-J>
@@ -212,6 +214,7 @@ nmap <silent> <leader>ve :e $MYVIMRC<CR>
 nmap <silent> <leader>vs :so $MYVIMRC<CR>
 nmap <silent> <leader>w <C-w>
 nmap <silent> <leader>gs :G<CR>
+nmap <silent> <leader>bd :bd<CR>
 " nnoremap ; :
 nmap <silent> <leader>/ :nohlsearch<CR>
 tnoremap <Leader><Esc> <C-\><C-n>
@@ -225,32 +228,32 @@ endif
 
 
 " Window {
-" if get(g:, 'vim_better_default_window_key_mapping', 1)
-"   nnoremap <Leader>ww <C-W>w
-"   nnoremap <Leader>wr <C-W>r
-"   nnoremap <Leader>wd <C-W>c
-"   nnoremap <Leader>wq <C-W>q
-"   nnoremap <Leader>wj <C-W>j
-"   nnoremap <Leader>wk <C-W>k
-"   nnoremap <Leader>wh <C-W>h
-"   nnoremap <Leader>wl <C-W>l
-"   if has('nvim') || has('terminal')
-"     tnoremap <Leader>wj <C-W>j
-"     tnoremap <Leader>wk <C-W>k
-"     tnoremap <Leader>wh <C-W>h
-"     tnoremap <Leader>wl <C-W>l
-"   endif
-"   nnoremap <Leader>wH <C-W>5<
-"   nnoremap <Leader>wL <C-W>5>
-"   nnoremap <Leader>wJ :resize +5<CR>
-"   nnoremap <Leader>wK :resize -5<CR>
-"   nnoremap <Leader>w= <C-W>=
-"   nnoremap <Leader>ws <C-W>s
-"   nnoremap <Leader>w- <C-W>s
-"   nnoremap <Leader>wv <C-W>v
-"   nnoremap <Leader>w\| <C-W>v
-"   nnoremap <Leader>w2 <C-W>v
-" endif
+  " if get(g:, 'vim_better_default_window_key_mapping', 1)
+  "   nnoremap <Leader>ww <C-W>w
+  "   nnoremap <Leader>wr <C-W>r
+  "   nnoremap <Leader>wd <C-W>c
+  "   nnoremap <Leader>wq <C-W>q
+  "   nnoremap <Leader>wj <C-W>j
+  "   nnoremap <Leader>wk <C-W>k
+  "   nnoremap <Leader>wh <C-W>h
+  "   nnoremap <Leader>wl <C-W>l
+  "   if has('nvim') || has('terminal')
+  "     tnoremap <Leader>wj <C-W>j
+  "     tnoremap <Leader>wk <C-W>k
+  "     tnoremap <Leader>wh <C-W>h
+  "     tnoremap <Leader>wl <C-W>l
+  "   endif
+  "   nnoremap <Leader>wH <C-W>5<
+  "   nnoremap <Leader>wL <C-W>5>
+  "   nnoremap <Leader>wJ :resize +5<CR>
+  "   nnoremap <Leader>wK :resize -5<CR>
+  "   nnoremap <Leader>w= <C-W>=
+  "   nnoremap <Leader>ws <C-W>s
+  "   nnoremap <Leader>w- <C-W>s
+  "   nnoremap <Leader>wv <C-W>v
+  "   nnoremap <Leader>w\| <C-W>v
+  "   nnoremap <Leader>w2 <C-W>v
+  " endif
 " }
 
 " w!! saves file under sudo
@@ -263,7 +266,39 @@ vmap <silent> j gj
 vmap <silent> k gk
 
 " Key mapping for Russian QWERTY keyboard in UTF-8
-set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz
+map й q
+map ц w
+map у e
+map к r
+map е t
+map н y
+map г u
+map ш i
+map щ o
+map з p
+map х [
+map ъ ]
+map ф a
+map ы s
+map в d
+map а f
+map п g
+map р h
+map о j
+map л k
+map д l
+map ж ;
+map э '
+map я z
+map ч x
+map с c
+map м v
+map и b
+map т n
+map ь m
+map б ,
+map ю .
+map Ж :
 
 " let g:netrw_list_hide = '.*\.swp$,.*\.pyc$,\.svn$,^\.[A-Za-z].*'
 " TextEdit might fail if hidden is not set.
@@ -330,7 +365,6 @@ nmap <silent> gr <Plug>(coc-references)
 
 " Use K to show documentation in preview window.
 nnoremap <silent> K :call <SID>show_documentation()<CR>
-
 
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
@@ -425,6 +459,7 @@ nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
 " Find symbol of current document.
 nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
 " Search workspace symbols.
+nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
 " Do default action for next item.
 nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 " Do default action for previous item.
@@ -434,9 +469,9 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 
 " This is the default extra key bindings
 let g:fzf_action = {
-      \ 'ctrl-t': 'tab split',
-      \ 'ctrl-x': 'split',
-      \ 'ctrl-v': 'vsplit' }
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-x': 'split',
+  \ 'ctrl-v': 'vsplit' }
 
 " Enable per-command history.
 " CTRL-N and CTRL-P will be automatically bound to next-history and
@@ -446,7 +481,6 @@ let g:fzf_history_dir = '~/.local/share/fzf-history'
 
 map <leader>f :Files<CR>
 map <leader><leader> :Buffers<CR>
-map <leader>bd :bd<CR>
 nnoremap <leader>g :Rg<CR>
 nnoremap <leader>t :Tags<CR>
 nnoremap <leader>m :Marks<CR> 
@@ -479,14 +513,13 @@ let g:fzf_colors =
 
 "Get Files
 command! -bang -nargs=? -complete=dir Files
-      \ call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': ['--layout=reverse', '--info=inline']}), <bang>0)
-
+    \ call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': ['--layout=reverse', '--info=inline']}), <bang>0)
 
 " Get text in files with Rg
 command! -bang -nargs=* Rg
-      \ call fzf#vim#grep(
-      \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
-      \   fzf#vim#with_preview(), <bang>0)
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
+  \   fzf#vim#with_preview(), <bang>0)
 
 " Ripgrep advanced
 function! RipgrepFzf(query, fullscreen)
@@ -501,12 +534,9 @@ command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
 
 " Git grep
 command! -bang -nargs=* GGrep
-      \ call fzf#vim#grep(
-      \   'git grep --line-number '.shellescape(<q-args>), 0,
-      \   fzf#vim#with_preview({'dir': systemlist('git rev-parse --show-toplevel')[0]}), <bang>0)
+  \ call fzf#vim#grep(
+  \   'git grep --line-number '.shellescape(<q-args>), 0,
+  \   fzf#vim#with_preview({'dir': systemlist('git rev-parse --show-toplevel')[0]}), <bang>0)
 
 " Prettier
-" autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html Prettier
-let g:prettier#autoformat = 1
-let g:prettier#autoformat_require_pragma = 0
-" let g:prettier#exec_cmd_async = 1
+let g:prettier#autoformat_config_present = 1
