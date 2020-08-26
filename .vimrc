@@ -13,7 +13,6 @@ call plug#begin('~/.vim/plugged')
   Plug 'junegunn/fzf.vim'
   Plug 'stsewd/fzf-checkout.vim'
    
-  -> ==> 
   " Coc
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
