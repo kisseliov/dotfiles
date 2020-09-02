@@ -314,7 +314,41 @@
                 "type": "basic"
               }
             ]
+          },
+                              {
+            "description": "Fn + curly brackets to brightness control",
+            "manipulators": [
+              {
+                "from": {
+                  "key_code": "open_bracket",
+                  "modifiers": {
+                    "mandatory": [ "fn", "shift" ]
+                  }
+                },
+                "to": [
+                  {
+                    "consumer_key_code": "display_brightness_decrement"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "close_bracket",
+                  "modifiers": {
+                    "mandatory": [ "fn", "shift" ]
+                  }
+                },
+                "to": [
+                  {
+                    "consumer_key_code": "display_brightness_increment"
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
           }
+
 
         ]
       },
