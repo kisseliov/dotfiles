@@ -5,7 +5,7 @@
 "    \ \__,_/_/|_/_/____/____/\___/_/_/\____/|___/  
 "     \____/ 
 "
-"  Github:     https://github.com/kisseliov/dotfiles/.vimrc
+"  Github:     https://github.com/kisseliov
 "  Maintainer: Yegor Kisseliov
 
 " Plugins {{{
@@ -15,6 +15,7 @@
     Plug 'joelstrouts/swatch.vim' 
     Plug 'wellle/targets.vim'
     Plug 'tpope/vim-commentary'
+    Plug 'tpope/vim-fireplace'
     Plug 'tpope/vim-dadbod'
     Plug 'tpope/vim-surround'
     Plug 'airblade/vim-rooter'
@@ -118,6 +119,8 @@
 
   let g:startify_bookmarks = []
 
+  let g:startify_custom_indices = ['j', 'k', 'l', ';', 'a', 's', 'd', 'f']
+
 
 " }}}
 
@@ -139,6 +142,7 @@
 
 " Writing {{{
 
+  let g:tex_flavor = 'latex'
   let g:markdown_folding = 1
 
   " Notes
@@ -242,7 +246,7 @@
   " Leader specific
   let g:mapleader = "\<Space>"
 
-  map <leader>f :Files<CR>
+  nnoremap <silent> <leader>f :Files<CR>
   map <leader><leader> :Buffers<CR>
   nnoremap <leader>g :Rg<CR>
   nnoremap <leader>t :Tags<CR>
@@ -252,7 +256,8 @@
   nmap <silent> <leader>vs :so $MYVIMRC<CR>
   nmap <silent> <leader>w <C-w>
   nmap <silent> <leader>gs :G<CR>
-  nmap <silent> <leader>bd :bd<CR>
+  nmap <silent> <leader>ggt :GitGutterToggle<CR>"{{{
+  nmap <silent> <leader>bd :bd<CR>"}}}
   " nnoremap ; :
   " nnoremap : ;
   nmap <silent> <leader>/ :nohlsearch<CR>
@@ -392,7 +397,7 @@ nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
+    execute 'vert h '.expand('<cword>')
   else
     call CocAction('doHover')
   endif
@@ -416,8 +421,8 @@ let g:coc_snippet_next = '<tab>'
 let g:coc_snippet_previous = '<s-tab>'
 
 " Formatting selected code.
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
+xmap <leader>fs  <Plug>(coc-format-selected)
+nmap <leader>fs  <Plug>(coc-format-selected)
 
 augroup mygroup
   autocmd!
@@ -553,4 +558,4 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
     \   fzf#vim#with_preview({'dir': systemlist('git rev-parse --show-toplevel')[0]}), <bang>0)
 " }}}
 
-" vim:fdm=marker
+" vim: fdm=marker
