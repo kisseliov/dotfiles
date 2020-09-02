@@ -13,7 +13,6 @@ export PATH=$PATH:$ANDROID_HOME/tools
 export PATH=$PATH:$ANDROID_HOME/tools/bin
 export PATH=$PATH:$ANDROID_HOME/platform-tools
 
-
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -111,14 +110,15 @@ export SSH_KEY_PATH="~/.ssh/rsa_id"
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
-#
-# Example aliases
 
+
+# Example aliases
 alias tree="tree -A"
 alias v="nvim"
 alias zshconfig="nvim ~/.zshrc"
 alias ohmyzsh="nvim ~/.oh-my-zsh"
 alias config='/usr/bin/git --git-dir=/Users/kisseliov/.cfg/ --work-tree=/Users/kisseliov'
+alias icat="kitty +kitten icat"
 
 # Load Nerd Fonts with Powerlevel9k theme for Zsh
 # POWERLEVEL9K_MODE='nerdfont-complete'
@@ -135,7 +135,8 @@ source "$HOMEBREW_FOLDER/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 source "$HOMEBREW_FOLDER/zsh-autosuggestions/zsh-autosuggestions.zsh"
 
 #Include Z
-. ~/z.sh
+. ~/.config/z.sh
+alias config='/usr/bin/git --git-dir=/Users/kisseliov/.cfg/ --work-tree=/Users/kisseliov'
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
