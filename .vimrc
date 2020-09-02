@@ -256,8 +256,8 @@
   nmap <silent> <leader>vs :so $MYVIMRC<CR>
   nmap <silent> <leader>w <C-w>
   nmap <silent> <leader>gs :G<CR>
-  nmap <silent> <leader>ggt :GitGutterToggle<CR>"{{{
-  nmap <silent> <leader>bd :bd<CR>"}}}
+  nmap <silent> <leader>ggt :GitGutterToggle<CR>
+  nmap <silent> <leader>bd :bd<CR>
   " nnoremap ; :
   " nnoremap : ;
   nmap <silent> <leader>/ :nohlsearch<CR>
