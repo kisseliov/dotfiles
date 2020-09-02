@@ -281,7 +281,41 @@
                 "type": "basic"
               }
             ]
+          },
+                    {
+            "description": "Fn + square brackets to volume control",
+            "manipulators": [
+              {
+                "from": {
+                  "key_code": "open_bracket",
+                  "modifiers": {
+                    "mandatory": "fn"
+                  }
+                },
+                "to": [
+                  {
+                    "consumer_key_code": "volume_decrement"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "close_bracket",
+                  "modifiers": {
+                    "mandatory": "fn"
+                  }
+                },
+                "to": [
+                  {
+                    "consumer_key_code": "volume_increment"
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
           }
+
         ]
       },
       "devices": [],
