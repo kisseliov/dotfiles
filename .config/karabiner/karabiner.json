@@ -282,7 +282,7 @@
               }
             ]
           },
-                    {
+          {
             "description": "Fn + square brackets to volume control",
             "manipulators": [
               {
@@ -315,7 +315,7 @@
               }
             ]
           },
-                              {
+          {
             "description": "Fn + curly brackets to brightness control",
             "manipulators": [
               {
@@ -342,6 +342,25 @@
                 "to": [
                   {
                     "consumer_key_code": "display_brightness_increment"
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
+          },
+          {
+            "description": "Fn + Backslash to play/pause",
+            "manipulators": [
+              {
+                "from": {
+                  "key_code": "backslash",
+                  "modifiers": {
+                    "mandatory": "fn" 
+                  }
+                },
+                "to": [
+                  {
+                    "consumer_key_code": "play_or_pause"
                   }
                 ],
                 "type": "basic"
