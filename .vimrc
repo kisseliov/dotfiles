@@ -12,14 +12,24 @@
 
   call plug#begin('~/.vim/plugged')
 
-    Plug 'joelstrouts/swatch.vim' 
-    Plug 'wellle/targets.vim'
+    " Clojure
+    Plug 'eraserhd/parinfer-rust', {'do':
+            \  'cargo build --release'}
+    Plug 'Olical/conjure', {'tag': 'v4.3.1'}
+    Plug 'w0rp/ale'
+    Plug 'clojure-vim/vim-jack-in'
+    Plug 'radenling/vim-dispatch-neovim'
+    Plug 'tpope/vim-dispatch'
+    
+    " Python
+    Plug 'Vimjas/vim-python-pep8-indent'
+    
+    Plug 'wellle/targets.vim' " More text objects
     Plug 'tpope/vim-commentary'
-    Plug 'tpope/vim-fireplace'
+    " Plug 'tpope/vim-fireplace'
     Plug 'tpope/vim-dadbod'
     Plug 'tpope/vim-surround'
     Plug 'airblade/vim-rooter'
-    Plug 'bluz71/vim-moonfly-colors'
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plug 'junegunn/fzf.vim'
@@ -42,6 +52,8 @@
     Plug 'xolox/vim-notes'
 
     " Theming
+    Plug 'joelstrouts/swatch.vim' 
+    Plug 'bluz71/vim-moonfly-colors'
     Plug 'mhinz/vim-startify'
     Plug 'itchyny/lightline.vim'
     Plug 'huyvohcmc/atlas.vim'
@@ -122,9 +134,19 @@
   let g:startify_custom_indices = ['j', 'k', 'l', ';', 'a', 's', 'd', 'f']
 
 
+  " Clojure
+  let g:float_preview#docked = 0
+  let g:float_preview#max_width = 80
+  let g:float_preview#max_height = 40
+
 " }}}
 
 " Programming {{{
+
+  " Clojure linter
+  let g:ale_linters = {
+        \ 'clojure': ['clj-kondo', 'joker']
+        \}
 
   " Codi
   hi! link CodiVirtualText String
@@ -245,7 +267,9 @@
 
   " Leader specific
   let g:mapleader = "\<Space>"
+  " let g:maplocalleader = ","
 
+  nnoremap <silent> <tab> za 
   nnoremap <silent> <leader>f :Files<CR>
   map <leader><leader> :Buffers<CR>
   nnoremap <leader>g :Rg<CR>
