@@ -10,6 +10,57 @@
 
 " Plugins {{{
 
+  " Install vim-plug if necessary
+  if ! filereadable(expand('~/.config/nvim/autoload/plug.vim'))
+    echo "Downloading junegunn/vim-plug to manage plugins..."
+    silent !mkdir -p ~/.config/nvim/autoload/
+    silent !curl "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" > ~/.config/nvim/autoload/plug.vim
+    autocmd VimEnter * PlugInstall
+  endif
+
+  call plug#begin('~/.vim/plugged')
+
+    Plug 'joelstrouts/swatch.vim' 
+    Plug 'wellle/targets.vim'
+    Plug 'tpope/vim-commentary'
+    Plug 'tpope/vim-fireplace'
+    Plug 'tpope/vim-dadbod'
+    Plug 'tpope/vim-surround'
+    Plug 'airblade/vim-rooter'
+    Plug 'bluz71/vim-moonfly-colors'
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+    Plug 'junegunn/fzf.vim'
+    Plug 'stsewd/fzf-checkout.vim'
+    Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install', 'for': 'markdown' }
+    Plug 'sheerun/vim-polyglot'
+    Plug 'ChristianChiarulli/codi.vim'
+    Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
+    Plug 'mbbill/undotree'
+    Plug 'ap/vim-css-color'
+    Plug 'lervag/vimtex'
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+    Plug 'tpope/vim-fugitive'
+    Plug 'airblade/vim-gitgutter'
+    Plug 'rbong/vim-flog'
+
+    " Notes
+    Plug 'xolox/vim-misc'
+    Plug 'xolox/vim-notes'
+
+    " Theming
+    Plug 'mhinz/vim-startify'
+    Plug 'itchyny/lightline.vim'
+    Plug 'huyvohcmc/atlas.vim'
+    Plug 'bluz71/vim-moonfly-colors'
+    Plug 'andreypopp/vim-colors-plain'
+    Plug 'drewtempelmeyer/palenight.vim'
+
+  call plug#end()
+
+" }}}
+
   call plug#begin('~/.vim/plugged')
 
     Plug 'joelstrouts/swatch.vim' 
