@@ -21,8 +21,8 @@
   call plug#begin('~/.vim/plugged')
 
     " Clojure
-    Plug 'eraserhd/parinfer-rust', {'do':
-            \  'cargo build --release'}
+    " Plug 'eraserhd/parinfer-rust', {'do':
+    "         \  'cargo build --release'}
     Plug 'Olical/conjure', {'tag': 'v4.3.1'}
     Plug 'w0rp/ale'
     Plug 'clojure-vim/vim-jack-in'
@@ -31,7 +31,8 @@
     
     " Python
     Plug 'Vimjas/vim-python-pep8-indent'
-    
+
+    Plug 'terryma/vim-expand-region'
     Plug 'wellle/targets.vim' " More text objects
     Plug 'tpope/vim-commentary'
     " Plug 'tpope/vim-fireplace'
@@ -275,7 +276,7 @@
 
   " Leader specific
   let g:mapleader = "\<Space>"
-  " let g:maplocalleader = ","
+  let g:maplocalleader = ","
 
   nnoremap <silent> <tab> za 
   nnoremap <silent> <leader>f :Files<CR>
