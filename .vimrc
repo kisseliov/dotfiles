@@ -21,13 +21,13 @@
   call plug#begin('~/.vim/plugged')
 
     " Clojure
-    " Plug 'eraserhd/parinfer-rust', {'do':
-    "         \  'cargo build --release'}
+    Plug 'eraserhd/parinfer-rust', {'do':
+            \  'cargo build --release'}
     Plug 'Olical/conjure', {'tag': 'v4.3.1'}
     Plug 'w0rp/ale'
-    Plug 'clojure-vim/vim-jack-in'
     Plug 'radenling/vim-dispatch-neovim'
     Plug 'tpope/vim-dispatch'
+    Plug 'guns/vim-sexp'    
     Plug 'tpope/vim-sexp-mappings-for-regular-people'    
 
     " Python
@@ -155,7 +155,7 @@
 
   " Clojure linter
   let g:ale_linters = {
-        \ 'clojure': ['clj-kondo', 'joker']
+        \ 'clojure': ['clj-kondo']
         \}
 
   " Codi
