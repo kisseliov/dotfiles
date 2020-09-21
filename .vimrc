@@ -37,6 +37,7 @@
     Plug 'wellle/targets.vim' " More text objects
     Plug 'tpope/vim-commentary'
     " Plug 'tpope/vim-fireplace'
+    Plug 'justinmk/vim-sneak'
     Plug 'tpope/vim-dadbod'
     Plug 'tpope/vim-surround'
     Plug 'airblade/vim-rooter'
@@ -80,6 +81,7 @@
   " Colorscheme
   set background=dark
   colorscheme plain
+
   if exists('*Swatch_load') | call Swatch_load() | endif
 
   " New adjustment: identify hl group under cursor and take you to new
@@ -120,7 +122,10 @@
   hi! LineNr ctermfg=236
   hi! CursorLineNr ctermfg=249
 
-  
+  " Sneak highlights
+  highlight Sneak ctermbg=3 
+  highlight SneakScope ctermbg=11 
+
   " Lightline
   let g:lightline = {
         \ 'colorscheme': 'wombat',
@@ -297,6 +302,12 @@
   nmap <silent> <leader>/ :nohlsearch<CR>
   tnoremap <Leader><Esc> <C-\><C-n>
   nnoremap <leader>p :GFiles<CR>
+
+  let g:sneak#s_next = 1
+  map f <Plug>Sneak_f
+  map F <Plug>Sneak_F
+  map t <Plug>Sneak_t
+  map T <Plug>Sneak_T
 
   " Symbol renaming.
   nmap <leader>rn <Plug>(coc-rename)
