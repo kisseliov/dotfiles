@@ -146,9 +146,6 @@
 
   let g:startify_bookmarks = []
 
-  let g:startify_custom_indices = ['j', 'k', 'l', ';', 'a', 's', 'd', 'f']
-
-
   " Clojure
   let g:float_preview#docked = 0
   let g:float_preview#max_width = 80
