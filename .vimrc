@@ -246,6 +246,7 @@
   filetype plugin on
   filetype plugin indent on
   
+  let g:netrw_preview=1
   " let g:netrw_list_hide = '.*\.swp$,.*\.pyc$,\.svn$,^\.[A-Za-z].*'
   " TextEdit might fail if hidden is not set.
 
