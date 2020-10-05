@@ -141,14 +141,14 @@
             ]
           },
           {
-            "description": "Fn + t to open Telegram",
+            "description": "Fn + Command + t to open Telegram",
             "manipulators": [
               {
                 "type": "basic",
                 "from": {
                   "key_code": "t",
                   "modifiers": {
-                    "mandatory": ["fn"]
+                    "mandatory": ["fn", "command"]
                   }
                 },
                 "to": [
@@ -160,14 +160,14 @@
             ]
           },
           {
-            "description": "Fn + f to open Firefox",
+            "description": "Fn + Command + f to open Firefox",
             "manipulators": [
               {
                 "type": "basic",
                 "from": {
                   "key_code": "f",
                   "modifiers": {
-                    "mandatory": ["fn"]
+                    "mandatory": ["fn", "command"]
                   }
                 },
                 "to": [
@@ -179,14 +179,14 @@
             ]
           },
           {
-            "description": "Fn + Shift + S to open Spotify",
+            "description": "Fn + Command + S to open Spotify",
             "manipulators": [
               {
                 "type": "basic",
                 "from": {
                   "key_code": "s",
                   "modifiers": {
-                    "mandatory": ["fn", "shift"]
+                    "mandatory": ["fn", "command"]
                   }
                 },
                 "to": [
@@ -198,14 +198,14 @@
             ]
           },
           {
-            "description": "Fn + Shift + C to open Chromium",
+            "description": "Fn + Command + C to open Chromium",
             "manipulators": [
               {
                 "type": "basic",
                 "from": {
                   "key_code": "c",
                   "modifiers": {
-                    "mandatory": ["fn", "shift"]
+                    "mandatory": ["fn", "command"]
                   }
                 },
                 "to": [
