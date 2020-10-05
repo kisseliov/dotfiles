@@ -366,8 +366,40 @@
                 "type": "basic"
               }
             ]
+          },
+          {
+            "description": "Fn + Command + squared brackets to fastforward and rewind",
+            "manipulators": [
+              {
+                "from": {
+                  "key_code": "open_bracket",
+                  "modifiers": {
+                    "mandatory": [ "fn", "command" ]
+                  }
+                },
+                "to": [
+                  {
+                    "consumer_key_code": "rewind"
+                  }
+                ],
+                "type": "basic"
+              },
+              {
+                "from": {
+                  "key_code": "close_bracket",
+                  "modifiers": {
+                    "mandatory": [ "fn", "command" ]
+                  }
+                },
+                "to": [
+                  {
+                    "consumer_key_code": "fastforward"
+                  }
+                ],
+                "type": "basic"
+              }
+            ]
           }
-
 
         ]
       },
