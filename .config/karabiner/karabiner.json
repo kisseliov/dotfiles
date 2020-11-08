@@ -141,14 +141,14 @@
             ]
           },
           {
-            "description": "Fn + Command + t to open Telegram",
+            "description": "Fn + 2 to open Telegram",
             "manipulators": [
               {
                 "type": "basic",
                 "from": {
-                  "key_code": "t",
+                  "key_code": "2",
                   "modifiers": {
-                    "mandatory": ["fn", "command"]
+                    "mandatory": ["fn"]
                   }
                 },
                 "to": [
@@ -160,14 +160,14 @@
             ]
           },
           {
-            "description": "Fn + Command + f to open Firefox",
+            "description": "Fn + 4 to open Firefox",
             "manipulators": [
               {
                 "type": "basic",
                 "from": {
-                  "key_code": "f",
+                  "key_code": "4",
                   "modifiers": {
-                    "mandatory": ["fn", "command"]
+                    "mandatory": ["fn"]
                   }
                 },
                 "to": [
@@ -179,14 +179,14 @@
             ]
           },
           {
-            "description": "Fn + Command + S to open Spotify",
+            "description": "Fn + 3 to open Spotify",
             "manipulators": [
               {
                 "type": "basic",
                 "from": {
-                  "key_code": "s",
+                  "key_code": "3",
                   "modifiers": {
-                    "mandatory": ["fn", "command"]
+                    "mandatory": ["fn"]
                   }
                 },
                 "to": [
@@ -400,7 +400,6 @@
               }
             ]
           }
-
         ]
       },
       "devices": [],
