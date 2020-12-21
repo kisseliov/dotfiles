@@ -272,6 +272,7 @@
   filetype plugin indent on
   
   let g:netrw_preview=1
+  let g:netrw_liststyle=3 " Tree style
   " let g:netrw_list_hide = '.*\.swp$,.*\.pyc$,\.svn$,^\.[A-Za-z].*'
   " TextEdit might fail if hidden is not set.
 
@@ -307,11 +308,20 @@
   let g:mapleader = "\<Space>"
   let g:maplocalleader = ","
 
+  nnoremap \p :Format<CR>
+  nnoremap 44 :set fdm=syntax<CR>
+  map \\ :w<CR>
+  map \<tab> :wq<CR>
+  nnoremap <silent> <leader>e :Explore<CR>
   nnoremap <silent> <tab> za 
+  " nnoremap <leader>ff <cmd>Telescope find_files<cr>
+  " nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+  " nnoremap <leader><leader> <cmd>Telescope buffers<cr>
+  " nnoremap <leader>fh <cmd>Telescope help_tags<cr>
   nnoremap <silent> <leader>f :Files<CR>
   map <leader><leader> :Buffers<CR>
   nnoremap <leader>g :Rg<CR>
-  nnoremap <leader>t :Tags<CR>
+  " nnoremap <leader>t :Tags<CR>
   nnoremap <leader>m :Marks<CR> 
   nnoremap <leader>h :History<CR> 
   nmap <silent> <leader>ve :e $MYVIMRC<CR>
@@ -323,7 +333,7 @@
   " nnoremap ; :
   " nnoremap : ;
   nmap <silent> <leader>/ :nohlsearch<CR>
-  tnoremap <Leader><Esc> <C-\><C-n>
+  tnoremap <Esc><Esc> <C-\><C-n>
   nnoremap <leader>p :GFiles<CR>
 
   let g:sneak#s_next = 1
@@ -345,20 +355,20 @@
   nnoremap <M-e> :Exp<CR>
 
   " Git checkout
-  nnoremap <leader>gc :GCheckout<CR>
+  nnoremap <leader>gc :GBranches<CR>
 
   " Set a timestamp 
   map <leader>D :put =strftime('%a %d %b %H:%M:%S')<CR>
 
   " Toggle line numbers
-  noremap <F3> :set invnumber invrelativenumber<CR>
+  noremap 33 :set invnumber invrelativenumber<CR>
 
   " Toggle undotree
-  nnoremap <F5> :UndotreeToggle<cr>
+  nnoremap 55 :UndotreeToggle<cr>
 
   " *Move* a visual block
-  " vnoremap <silent>J :m '>+1<CR>gv=gv
-  " vnoremap <silent>K :m '<-2<CR>gv=gv
+  vnoremap <silent>J :m '>+1<CR>gv=gv
+  vnoremap <silent>K :m '<-2<CR>gv=gv
 
   " Cycle through buffers
   nnoremap <C-n> :bnext<CR>
@@ -374,6 +384,14 @@
   nnoremap <M-k> <C-W>K
   nnoremap <M-l> <C-W>L
 
+  nnoremap <leader>t0  :tabfirst<CR>
+  nnoremap <leader>tl  :tabnext<CR>
+  nnoremap <leader>th  :tabprev<CR>
+  nnoremap <leader>t$  :tablast<CR>
+  nnoremap <leader>tt  :tabnew<Space>
+  nnoremap <leader>tn  :tabnext<Space>
+  nnoremap <leader>tm  :tabm<Space>
+  nnoremap <leader>td  :tabclose<CR>
 
   " Open shell in vim
   if has('nvim') || has('terminal')
@@ -381,36 +399,6 @@
   else
     map <silent> <Leader>' :shell<CR>
   endif
-
-
-  " Window {
-    " if get(g:, 'vim_better_default_window_key_mapping', 1)
-    "   nnoremap <Leader>ww <C-W>w
-    "   nnoremap <Leader>wr <C-W>r
-    "   nnoremap <Leader>wd <C-W>c
-    "   nnoremap <Leader>wq <C-W>q
-    "   nnoremap <Leader>wj <C-W>j
-    "   nnoremap <Leader>wk <C-W>k
-    "   nnoremap <Leader>wh <C-W>h
-    "   nnoremap <Leader>wl <C-W>l
-    "   if has('nvim') || has('terminal')
-    "     tnoremap <Leader>wj <C-W>j
-    "     tnoremap <Leader>wk <C-W>k
-    "     tnoremap <Leader>wh <C-W>h
-    "     tnoremap <Leader>wl <C-W>l
-    "   endif
-    "   nnoremap <Leader>wH <C-W>5<
-    "   nnoremap <Leader>wL <C-W>5>
-    "   nnoremap <Leader>wJ :resize +5<CR>
-    "   nnoremap <Leader>wK :resize -5<CR>
-    "   nnoremap <Leader>w= <C-W>=
-    "   nnoremap <Leader>ws <C-W>s
-    "   nnoremap <Leader>w- <C-W>s
-    "   nnoremap <Leader>wv <C-W>v
-    "   nnoremap <Leader>w\| <C-W>v
-    "   nnoremap <Leader>w2 <C-W>v
-    " endif
-  " }
 
   " w!! saves file under sudo
   cmap w!! w !sudo tee % >/dev/null
