@@ -20,6 +20,24 @@
 
   call plug#begin('~/.vim/plugged')
 
+    Plug 'simeji/winresizer'
+    Plug 'honza/vim-snippets'
+
+    Plug 'leafOfTree/vim-vue-plugin'
+    Plug 'nicwest/vim-camelsnek'
+    Plug 'ThePrimeagen/vim-be-good'
+    Plug 'neovim/nvim-lspconfig'   
+
+    " Telescope
+    " Plug 'nvim-lua/popup.nvim'
+    " Plug 'nvim-lua/plenary.nvim'
+    " Plug 'nvim-telescope/telescope.nvim'
+
+    " Lua 
+    Plug 'bfredl/nvim-luadev'
+    Plug 'tjdevries/nlua.nvim'
+    Plug 'euclidianAce/BetterLua.vim'
+
     " Clojure
     Plug 'eraserhd/parinfer-rust', {'do':
             \  'cargo build --release'}
@@ -52,7 +70,7 @@
     Plug 'mbbill/undotree'
     Plug 'ap/vim-css-color'
     Plug 'lervag/vimtex'
-    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    Plug 'tpope/vim-rails'
 
     Plug 'tpope/vim-fugitive'
     Plug 'airblade/vim-gitgutter'
@@ -63,7 +81,7 @@
     Plug 'xolox/vim-notes'
 
     " Theming
-    Plug 'joelstrouts/swatch.vim' 
+    " Plug 'joelstrouts/swatch.vim' 
     Plug 'bluz71/vim-moonfly-colors'
     Plug 'mhinz/vim-startify'
     Plug 'itchyny/lightline.vim'
@@ -82,15 +100,15 @@
   set background=dark
   colorscheme plain
 
-  if exists('*Swatch_load') | call Swatch_load() | endif
+  " if exists('*Swatch_load') | call Swatch_load() | endif
 
-  " New adjustment: identify hl group under cursor and take you to new
-  " buffer where its attributes can be adjusted
-  nnoremap <leader>ss :call Swatch_new_adjustment()
+  " " New adjustment: identify hl group under cursor and take you to new
+  " " buffer where its attributes can be adjusted
+  " nnoremap <leader>ss :call Swatch_new_adjustment()
 
-  " Preview this: highlight the current word (color name or hex code) with
-  " the color it represents
-  nnoremap <leader>pt :call Swatch_preview_this()
+  " " Preview this: highlight the current word (color name or hex code) with
+  " " the color it represents
+  " nnoremap <leader>pt :call Swatch_preview_this()
 
   if has("gui_running")
       "" Tweak GUI options
@@ -171,7 +189,14 @@
 
   " Prettier
   let g:prettier#autoformat_config_present = 1
-  
+
+  " Polyglot
+  " Disable polyglot for vue and svelte files due to slowdowns
+  let g:polyglot_disabled = ['vue', 'svelte']
+
+  " More vue competions
+  let g:vim_vue_plugin_load_full_syntax = 1
+
 " }}}
 
 " Writing {{{
@@ -307,6 +332,9 @@
   map t <Plug>Sneak_t
   map T <Plug>Sneak_T
 
+  " If you want to start window resize mode by `Ctrl+T`
+  let g:winresizer_start_key = '<C-_>'
+
   " Symbol renaming.
   nmap <leader>rn <Plug>(coc-rename)
 
@@ -432,7 +460,7 @@ nmap <silent> ]g <Plug>(coc-diagnostic-next)
 " GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
+" nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
 " Use K to show documentation in preview window.
@@ -519,7 +547,7 @@ set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 " Show all diagnostics.
 nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
 " Manage extensions.
-nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
+" nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
 " Show commands.
 nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
 " Find symbol of current document.
@@ -549,13 +577,13 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
   " explicitly bind the keys to down and up in your $FZF_DEFAULT_OPTS.
   let g:fzf_history_dir = '~/.local/share/fzf-history'
 
-  let g:fzf_tags_command = 'ctags -R'
+  let g:fzf_tags_command = 'ctags -R --exclude=.git --exclude=node_modules'
 
   " Border color
-  let $FZF_DEFAULT_OPTS = '--layout=reverse --info=inline'
+  let $FZF_DEFAULT_OPTS = "--layout=reverse --info=inline"
   let $FZF_DEFAULT_COMMAND="rg --files --hidden"
 
-  let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.8 } }
+  let g:fzf_layout = { 'down': '40%' }
 
   " Customize fzf colors to match your color scheme
   let g:fzf_colors =
@@ -573,7 +601,7 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
         \   'spinner': ['fg', 'Label'],
         \   'header':  ['fg', 'Comment'] }
 
-  "Get Files
+  " Get Files
   command! -bang -nargs=? -complete=dir Files
       \ call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': ['--layout=reverse', '--info=inline']}), <bang>0)
 
